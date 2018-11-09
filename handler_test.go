@@ -45,8 +45,6 @@ func TestBufferedStreamHandler_SendsMessagesAfterFlushBytes(t *testing.T) {
 	assert.Equal(t, "lvl=eror msg=\"some message\"\nlvl=eror msg=\"some message\"\n", buf.String())
 }
 
-
-
 func TestBufferedStreamHandler_DoesntWriteAfterClose(t *testing.T) {
 	buf := &bytes.Buffer{}
 	h := logged.BufferedStreamHandler(buf, 40, time.Second, logged.LogfmtFormat())
