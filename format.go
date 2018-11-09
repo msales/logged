@@ -144,7 +144,7 @@ func LogfmtFormat() Formatter {
 	})
 }
 
-// formatValue formats a value, adding it to the Buffer.
+// formatLogfmtValue formats a value, adding it to the Buffer.
 func formatLogfmtValue(buf *Buffer, value interface{}) {
 	if value == nil {
 		return
