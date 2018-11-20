@@ -7,6 +7,69 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestLevelFromString(t *testing.T) {
+	tests := []struct {
+		lvl       string
+		want      logged.Level
+		wantError bool
+	}{
+		{
+			lvl:       "dbug",
+			want:      logged.Debug,
+			wantError: false,
+		},
+		{
+			lvl:       "debug",
+			want:      logged.Debug,
+			wantError: false,
+		},
+		{
+			lvl:       "info",
+			want:      logged.Info,
+			wantError: false,
+		},
+		{
+			lvl:       "warn",
+			want:      logged.Warn,
+			wantError: false,
+		},
+		{
+			lvl:       "eror",
+			want:      logged.Error,
+			wantError: false,
+		},
+		{
+			lvl:       "error",
+			want:      logged.Error,
+			wantError: false,
+		},
+		{
+			lvl:       "crit",
+			want:      logged.Crit,
+			wantError: false,
+		},
+		{
+			lvl:       "unkn",
+			want:      logged.Level(123),
+			wantError: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.lvl, func(t *testing.T) {
+			lvl, err := logged.LevelFromString(tt.lvl)
+
+			if tt.wantError {
+				assert.Error(t, err)
+				return
+			}
+
+			assert.NoError(t, err)
+			assert.Equal(t, tt.want, lvl, )
+		})
+	}
+}
+
 func TestLevel_String(t *testing.T) {
 	tests := []struct {
 		lvl  logged.Level

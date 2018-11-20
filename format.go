@@ -28,7 +28,7 @@ func (f FormatterFunc) Format(msg string, lvl Level, ctx []interface{}) []byte {
 	return f(msg, lvl, ctx)
 }
 
-var jsonPool = NewPool(512)
+var jsonPool = newPool(512)
 
 // JSONFormat formats a log line in json format.
 func JSONFormat() Formatter {
@@ -65,8 +65,8 @@ func JSONFormat() Formatter {
 	})
 }
 
-// formatJSONValue formats a value, adding it to the Buffer.
-func formatJSONValue(buf *Buffer, value interface{}) {
+// formatJSONValue formats a value, adding it to the buffer.
+func formatJSONValue(buf *buffer, value interface{}) {
 	if value == nil {
 		buf.WriteString("null")
 		return
@@ -110,7 +110,7 @@ func formatJSONValue(buf *Buffer, value interface{}) {
 	}
 }
 
-var logfmtPool = NewPool(512)
+var logfmtPool = newPool(512)
 
 // LogfmtFormat formats a log line in logfmt format.
 func LogfmtFormat() Formatter {
@@ -146,8 +146,8 @@ func LogfmtFormat() Formatter {
 	})
 }
 
-// formatLogfmtValue formats a value, adding it to the Buffer.
-func formatLogfmtValue(buf *Buffer, value interface{}) {
+// formatLogfmtValue formats a value, adding it to the buffer.
+func formatLogfmtValue(buf *buffer, value interface{}) {
 	if value == nil {
 		return
 	}
@@ -188,7 +188,7 @@ func formatLogfmtValue(buf *Buffer, value interface{}) {
 	}
 }
 
-func logfmtQuoteString(buf *Buffer, s string) {
+func logfmtQuoteString(buf *buffer, s string) {
 	needsQuotes := false
 	for _, r := range s {
 		if r <= ' ' || r == '=' || r == '"' {
@@ -207,7 +207,7 @@ func logfmtQuoteString(buf *Buffer, s string) {
 	}
 }
 
-func quoteString(buf *Buffer, s string) {
+func quoteString(buf *buffer, s string) {
 	buf.WriteByte('"')
 
 	escapeString(buf, s)
@@ -215,7 +215,7 @@ func quoteString(buf *Buffer, s string) {
 	buf.WriteByte('"')
 }
 
-func escapeString(buf *Buffer, s string) {
+func escapeString(buf *buffer, s string) {
 	for _, r := range s {
 		switch r {
 		case '\\', '"':

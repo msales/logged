@@ -11,7 +11,7 @@ import (
 func TestPool(t *testing.T) {
 	const dummyData = "dummy data"
 
-	p := NewPool(512)
+	p := newPool(512)
 
 	var wg sync.WaitGroup
 	for i := 0; i < 10; i++ {
@@ -37,7 +37,7 @@ func TestPool(t *testing.T) {
 }
 
 func TestBuffer(t *testing.T) {
-	buf := NewPool(512).Get()
+	buf := newPool(512).Get()
 
 	tests := []struct {
 		name string
