@@ -3,9 +3,8 @@ package logged_test
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-
 	"github.com/msales/logged"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestLevel_String(t *testing.T) {

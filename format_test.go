@@ -10,7 +10,7 @@ import (
 )
 
 func TestJsonFormat(t *testing.T) {
-	f := logged.JsonFormat()
+	f := logged.JSONFormat()
 
 	b := f.Format("some message", logged.Error, []interface{}{"x", 1, "y", 3.2, "bool", true,
 		"carriage_return", "bang" + string('\r') + "foo", "tab", "bar	baz", "newline", "foo\nbar", "escape", string('\\')})
@@ -24,7 +24,7 @@ func TestJsonFormat(t *testing.T) {
 }
 
 func TestJsonFormat_KeyError(t *testing.T) {
-	f := logged.JsonFormat()
+	f := logged.JSONFormat()
 
 	b := f.Format("some message", logged.Error, []interface{}{1, "y"})
 
@@ -37,7 +37,7 @@ func TestJsonFormat_KeyError(t *testing.T) {
 }
 
 func TestJsonFormat_Ints(t *testing.T) {
-	f := logged.JsonFormat()
+	f := logged.JSONFormat()
 
 	b := f.Format("", logged.Error, []interface{}{"int", 1, "int8", int8(2), "int16", int16(3), "int32", int32(4), "int64", int64(5)})
 
@@ -50,7 +50,7 @@ func TestJsonFormat_Ints(t *testing.T) {
 }
 
 func TestJsonFormat_Uints(t *testing.T) {
-	f := logged.JsonFormat()
+	f := logged.JSONFormat()
 
 	b := f.Format("", logged.Error, []interface{}{"uint", uint(1), "uint8", uint8(2), "uint16", uint16(3), "uint32", uint32(4), "uint64", uint64(5)})
 
@@ -63,7 +63,7 @@ func TestJsonFormat_Uints(t *testing.T) {
 }
 
 func TestJsonFormat_Floats(t *testing.T) {
-	f := logged.JsonFormat()
+	f := logged.JSONFormat()
 
 	b := f.Format("", logged.Error, []interface{}{"float32", float32(1), "float64", float64(4.56)})
 
@@ -76,7 +76,7 @@ func TestJsonFormat_Floats(t *testing.T) {
 }
 
 func TestJsonFormat_Time(t *testing.T) {
-	f := logged.JsonFormat()
+	f := logged.JSONFormat()
 
 	b := f.Format("", logged.Error, []interface{}{"time", time.Unix(1541573670, 0).UTC()})
 
@@ -93,7 +93,7 @@ func TestJsonFormat_Unknown(t *testing.T) {
 		Name string
 	}{Name: "test"}
 
-	f := logged.JsonFormat()
+	f := logged.JSONFormat()
 
 	b := f.Format("", logged.Error, []interface{}{"what", obj, "nil", nil})
 

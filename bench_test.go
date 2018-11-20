@@ -22,7 +22,7 @@ func BenchmarkLogged_Logfmt(b *testing.B) {
 
 func BenchmarkLogged_Json(b *testing.B) {
 	buf := &bytes.Buffer{}
-	l := logged.New(logged.StreamHandler(buf, logged.JsonFormat()), "_n", "bench", "_p", 1)
+	l := logged.New(logged.StreamHandler(buf, logged.JSONFormat()), "_n", "bench", "_p", 1)
 
 	b.ReportAllocs()
 	b.ResetTimer()
@@ -48,7 +48,7 @@ func BenchmarkLevelLogged_Logfmt(b *testing.B) {
 func BenchmarkLevelLogged_Json(b *testing.B) {
 	buf := &bytes.Buffer{}
 	b.ResetTimer()
-	l := logged.New(logged.StreamHandler(buf, logged.JsonFormat()), "_n", "bench", "_p", os.Getpid())
+	l := logged.New(logged.StreamHandler(buf, logged.JSONFormat()), "_n", "bench", "_p", os.Getpid())
 	for i := 0; i < b.N; i++ {
 		l.Debug("debug", "key", 1, "key2", 3.141592, "key3", "string", "key4", false)
 		l.Info("info", "key", 1, "key2", 3.141592, "key3", "string", "key4", false)

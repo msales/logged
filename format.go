@@ -6,7 +6,9 @@ import (
 )
 
 const (
-	LevelKey   = "lvl"
+	//LevelKey is the key used for message levels.
+	LevelKey = "lvl"
+	// MessageKey is the key used for message descriptions.
 	MessageKey = "msg"
 
 	timeFormat = "2006-01-02T15:04:05-0700" // ISO8601 format
@@ -28,8 +30,8 @@ func (f FormatterFunc) Format(msg string, lvl Level, ctx []interface{}) []byte {
 
 var jsonPool = NewPool(512)
 
-// JsonFormatter formats a log line in json format.
-func JsonFormat() Formatter {
+// JSONFormat formats a log line in json format.
+func JSONFormat() Formatter {
 	return FormatterFunc(func(msg string, lvl Level, ctx []interface{}) []byte {
 		buf := jsonPool.Get()
 
@@ -47,13 +49,13 @@ func JsonFormat() Formatter {
 			if !ok {
 				buf.WriteString(`"` + errorKey + `"`)
 				buf.WriteByte(':')
-				formatJsonValue(buf, ctx[i])
+				formatJSONValue(buf, ctx[i])
 				continue
 			}
 
 			buf.WriteString(`"` + k + `"`)
 			buf.WriteByte(':')
-			formatJsonValue(buf, ctx[i+1])
+			formatJSONValue(buf, ctx[i+1])
 		}
 
 		buf.WriteString("}\n")
@@ -63,8 +65,8 @@ func JsonFormat() Formatter {
 	})
 }
 
-// formatJsonValue formats a value, adding it to the Buffer.
-func formatJsonValue(buf *Buffer, value interface{}) {
+// formatJSONValue formats a value, adding it to the Buffer.
+func formatJSONValue(buf *Buffer, value interface{}) {
 	if value == nil {
 		buf.WriteString("null")
 		return

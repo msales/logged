@@ -140,9 +140,12 @@ func StreamHandler(w io.Writer, fmtr Formatter) Handler {
 	return HandlerFunc(h)
 }
 
+// FilterFunc represents a function that can filter messages.
+type FilterFunc func(msg string, lvl Level, ctx []interface{}) bool
+
 // FilterHandler returns a handler that only writes messages to the wrapped
 // handler if the given function evaluates true.
-func FilterHandler(fn func(msg string, lvl Level, ctx []interface{}) bool, h Handler) Handler {
+func FilterHandler(fn FilterFunc, h Handler) Handler {
 	c := &closeHandler{
 		Handler: HandlerFunc(func(msg string, lvl Level, ctx []interface{}) {
 			if fn(msg, lvl, ctx) {
