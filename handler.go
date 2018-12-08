@@ -27,16 +27,16 @@ type bufStreamHandler struct {
 	fmtr          Formatter
 
 	mx   sync.Mutex
-	pool Pool
-	buf  *Buffer
-	ch   chan *Buffer
+	pool pool
+	buf  *buffer
+	ch   chan *buffer
 
 	shutdown chan bool
 }
 
 // BufferedStreamHandler writes buffered log messages to an io.Writer with the given format.
 func BufferedStreamHandler(w io.Writer, flushBytes int, flushInterval time.Duration, fmtr Formatter) Handler {
-	pool := NewPool(flushBytes)
+	pool := newPool(flushBytes)
 
 	h := &bufStreamHandler{
 		flushBytes:    flushBytes,
@@ -45,7 +45,7 @@ func BufferedStreamHandler(w io.Writer, flushBytes int, flushInterval time.Durat
 		w:             w,
 		pool:          pool,
 		buf:           pool.Get(),
-		ch:            make(chan *Buffer, 32),
+		ch:            make(chan *buffer, 32),
 		shutdown:      make(chan bool, 1),
 	}
 

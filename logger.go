@@ -1,6 +1,9 @@
 package logged
 
-import "io"
+import (
+	"errors"
+	"io"
+)
 
 const errorKey = "LOGGED_ERROR"
 
@@ -15,6 +18,24 @@ const (
 
 // Level represents the predefined log level.
 type Level int
+
+// LevelFromString converts a string to Level.
+func LevelFromString(lvl string) (Level, error) {
+	switch lvl {
+	case "debug", "dbug":
+		return Debug, nil
+	case "info":
+		return Info, nil
+	case "warn":
+		return Warn, nil
+	case "error", "eror":
+		return Error, nil
+	case "crit":
+		return Crit, nil
+	default:
+		return 0, errors.New("unknown level " + lvl)
+	}
+}
 
 // String returns the string representation of the level.
 func (l Level) String() string {
