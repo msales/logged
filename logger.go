@@ -65,7 +65,7 @@ const (
 // Format represents the predefined log format.
 type Format int
 
-// formatFromString returns a formatter instance appropriate for the given format name.
+// FormatFromString returns a formatter instance appropriate for the given format name.
 func FormatFromString(format string) (Formatter, error) {
 	switch format {
 	case "json":
