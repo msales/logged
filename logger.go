@@ -1,8 +1,9 @@
 package logged
 
 import (
-	"errors"
 	"io"
+
+	"golang.org/x/xerrors"
 )
 
 const errorKey = "LOGGED_ERROR"
@@ -33,7 +34,7 @@ func LevelFromString(lvl string) (Level, error) {
 	case "crit":
 		return Crit, nil
 	default:
-		return 0, errors.New("unknown level " + lvl)
+		return 0, xerrors.Errorf("log: invalid log level: %s", lvl)
 	}
 }
 
@@ -50,6 +51,39 @@ func (l Level) String() string {
 		return "eror"
 	case Crit:
 		return "crit"
+	default:
+		return "unkn"
+	}
+}
+
+// List of predefined log Formats
+const (
+	Json Format = iota
+	Logfmt
+)
+
+// Format represents the predefined log format.
+type Format int
+
+// formatFromString returns a formatter instance appropriate for the given format name.
+func FormatFromString(format string) (Formatter, error) {
+	switch format {
+	case "json":
+		return JSONFormat(), nil
+	case "logfmt":
+		return LogfmtFormat(), nil
+	default:
+		return nil, xerrors.Errorf("log: invalid log format: %s", format)
+	}
+}
+
+// String returns the string representation of the level.
+func (f Format) String() string {
+	switch f {
+	case Json:
+		return "json"
+	case Logfmt:
+		return "logfmt"
 	default:
 		return "unkn"
 	}

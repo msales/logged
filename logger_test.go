@@ -65,7 +65,7 @@ func TestLevelFromString(t *testing.T) {
 			}
 
 			assert.NoError(t, err)
-			assert.Equal(t, tt.want, lvl, )
+			assert.Equal(t, tt.want, lvl)
 		})
 	}
 }
@@ -103,6 +103,64 @@ func TestLevel_String(t *testing.T) {
 
 	for _, tt := range tests {
 		assert.Equal(t, tt.want, tt.lvl.String())
+	}
+}
+
+func TestFormatFromString(t *testing.T) {
+	tests := []struct {
+		format    string
+		wantError bool
+	}{
+		{
+			format:    "json",
+			wantError: false,
+		},
+		{
+			format:    "logfmt",
+			wantError: false,
+		},
+		{
+			format:    "unkn",
+			wantError: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.format, func(t *testing.T) {
+			format, err := logged.FormatFromString(tt.format)
+
+			if tt.wantError {
+				assert.Error(t, err)
+				return
+			}
+
+			assert.NoError(t, err)
+			assert.IsType(t, logged.FormatterFunc(nil), format)
+		})
+	}
+}
+
+func TestFormat_String(t *testing.T) {
+	tests := []struct {
+		format logged.Format
+		want   string
+	}{
+		{
+			format: logged.Json,
+			want:   "json",
+		},
+		{
+			format: logged.Logfmt,
+			want:   "logfmt",
+		},
+		{
+			format: logged.Format(123),
+			want:   "unkn",
+		},
+	}
+
+	for _, tt := range tests {
+		assert.Equal(t, tt.want, tt.format.String())
 	}
 }
 
