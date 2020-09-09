@@ -58,15 +58,15 @@ func (l Level) String() string {
 
 // List of predefined log Formats
 const (
-	Json Format = iota
+	JSON Format = iota
 	Logfmt
 )
 
 // Format represents the predefined log format.
 type Format int
 
-// FormatFromString returns a formatter instance appropriate for the given format name.
-func FormatFromString(format string) (Formatter, error) {
+// FormatterFromString returns a formatter instance appropriate for the given format name.
+func FormatterFromString(format string) (Formatter, error) {
 	switch format {
 	case "json":
 		return JSONFormat(), nil
@@ -80,7 +80,7 @@ func FormatFromString(format string) (Formatter, error) {
 // String returns the string representation of the level.
 func (f Format) String() string {
 	switch f {
-	case Json:
+	case JSON:
 		return "json"
 	case Logfmt:
 		return "logfmt"

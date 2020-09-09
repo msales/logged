@@ -106,7 +106,7 @@ func TestLevel_String(t *testing.T) {
 	}
 }
 
-func TestFormatFromString(t *testing.T) {
+func TestFormatterFromString(t *testing.T) {
 	tests := []struct {
 		format    string
 		wantError bool
@@ -127,7 +127,7 @@ func TestFormatFromString(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.format, func(t *testing.T) {
-			format, err := logged.FormatFromString(tt.format)
+			format, err := logged.FormatterFromString(tt.format)
 
 			if tt.wantError {
 				assert.Error(t, err)
@@ -146,7 +146,7 @@ func TestFormat_String(t *testing.T) {
 		want   string
 	}{
 		{
-			format: logged.Json,
+			format: logged.JSON,
 			want:   "json",
 		},
 		{
