@@ -25,3 +25,4 @@ jobs:
           org_token: ${{ secrets.GH_TOKEN }}
           staticcheck: true
           staticcheck_version: latest
+          race: false
