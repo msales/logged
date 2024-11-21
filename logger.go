@@ -1,9 +1,8 @@
 package logged
 
 import (
+	"fmt"
 	"io"
-
-	"golang.org/x/xerrors"
 )
 
 const errorKey = "LOGGED_ERROR"
@@ -34,7 +33,7 @@ func LevelFromString(lvl string) (Level, error) {
 	case "crit":
 		return Crit, nil
 	default:
-		return 0, xerrors.Errorf("log: invalid log level: %s", lvl)
+		return 0, fmt.Errorf("log: invalid log level: %s", lvl)
 	}
 }
 
@@ -73,7 +72,7 @@ func FormatterFromString(format string) (Formatter, error) {
 	case "logfmt":
 		return LogfmtFormat(), nil
 	default:
-		return nil, xerrors.Errorf("log: invalid log format: %s", format)
+		return nil, fmt.Errorf("log: invalid log format: %s", format)
 	}
 }
 
